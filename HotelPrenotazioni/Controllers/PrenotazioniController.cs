@@ -74,11 +74,16 @@ namespace HotelPrenotazioni.Controllers
         {
             if (id == null) return NotFound();
 
-            var prenotazione = await _context.Prenotazioni.FindAsync(id);
+            var prenotazione = await _context.Prenotazioni
+                .Include(p => p.Cliente)  
+                .FirstOrDefaultAsync(p => p.PrenotazioneId == id);
+
             if (prenotazione == null) return NotFound();
 
+            // Passa i SelectList corretti per il ClienteId e CameraId alla vista
+            ViewData["ClienteId"] = new SelectList(_context.Clienti, "ClienteId", "Nome", prenotazione.ClienteId);
             ViewData["CameraId"] = new SelectList(_context.Camere, "CameraId", "Numero", prenotazione.CameraId);
-            ViewData["ClienteId"] = new SelectList(_context.Clienti, "ClienteId", "Cognome", prenotazione.ClienteId);
+
             return View(prenotazione);
         }
 
@@ -107,8 +112,9 @@ namespace HotelPrenotazioni.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
+            
+            ViewData["ClienteId"] = new SelectList(_context.Clienti, "ClienteId", "Nome", prenotazione.ClienteId);
             ViewData["CameraId"] = new SelectList(_context.Camere, "CameraId", "Numero", prenotazione.CameraId);
-            ViewData["ClienteId"] = new SelectList(_context.Clienti, "ClienteId", "Cognome", prenotazione.ClienteId);
             return View(prenotazione);
         }
 

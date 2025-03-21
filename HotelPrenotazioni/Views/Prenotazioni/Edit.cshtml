@@ -1,43 +1,63 @@
-﻿@model HotelPrenotazioni.Models.Cliente
+﻿@model HotelPrenotazioni.Models.Prenotazione
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Modifica Prenotazione";
 }
 
 <div class="edit-container">
-    <h4>Modifica Cliente</h4>
+    <h4>Modifica Prenotazione</h4>
     <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Edit">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="ClienteId" />
-                <div class="form-group">
-                    <label asp-for="Nome" class="control-label"></label>
-                    <input asp-for="Nome" class="form-control" />
-                    <span asp-validation-for="Nome" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Cognome" class="control-label"></label>
-                    <input asp-for="Cognome" class="form-control" />
-                    <span asp-validation-for="Cognome" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Email" class="control-label"></label>
-                    <input asp-for="Email" class="form-control" />
-                    <span asp-validation-for="Email" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="Telefono" class="control-label"></label>
-                    <input asp-for="Telefono" class="form-control" />
-                    <span asp-validation-for="Telefono" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Salva" class="btn btn-primary" />
-                </div>
-            </form>
+    <form asp-action="Edit">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+        <input type="hidden" asp-for="PrenotazioneId" />
+
+        <div class="form-group">
+            <label asp-for="ClienteId" class="control-label"></label>
+            <select asp-for="ClienteId" class="form-control">
+                <option value="">Seleziona un cliente</option>
+                @foreach (var cliente in (IEnumerable<Cliente>)ViewData["ClienteId"])
+                {
+                    <option value="@cliente.ClienteId">@cliente.Cognome</option>
+                }
+            </select>
+            <span asp-validation-for="ClienteId" class="text-danger"></span>
         </div>
-    </div>
+
+        <div class="form-group">
+            <label asp-for="CameraId" class="control-label"></label>
+            <select asp-for="CameraId" class="form-control">
+                <option value="">Seleziona una camera</option>
+                @foreach (var camera in (IEnumerable<Camera>)ViewData["CameraId"])
+                {
+                    <option value="@camera.CameraId">@camera.Numero</option>
+                }
+            </select>
+            <span asp-validation-for="CameraId" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DataInizio" class="control-label"></label>
+            <input asp-for="DataInizio" class="form-control" type="date" />
+            <span asp-validation-for="DataInizio" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="DataFine" class="control-label"></label>
+            <input asp-for="DataFine" class="form-control" type="date" />
+            <span asp-validation-for="DataFine" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <label asp-for="Stato" class="control-label"></label>
+            <input asp-for="Stato" class="form-control" />
+            <span asp-validation-for="Stato" class="text-danger"></span>
+        </div>
+
+        <div class="form-group">
+            <input type="submit" value="Salva" class="btn btn-primary" />
+        </div>
+    </form>
 </div>
 
 <div>

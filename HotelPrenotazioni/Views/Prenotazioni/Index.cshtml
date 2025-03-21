@@ -50,7 +50,8 @@
                         @Html.DisplayFor(modelItem => item.Stato)
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@item.PrenotazioneId">Modifica</a> |
+                        <a asp-action="Edit" asp-route-id="@item.PrenotazioneId">Modifica</a>
+
                         <a asp-action="Details" asp-route-id="@item.PrenotazioneId">Dettagli</a> |
 
                         @if (User.IsInRole("Admin") || User.IsInRole("Manager"))
