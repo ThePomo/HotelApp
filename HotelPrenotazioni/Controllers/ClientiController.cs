@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace HotelPrenotazioni.Controllers
 {
-    [Authorize]
+    [Authorize] 
     public class ClientiController : Controller
     {
         private readonly HotelDbContext _context;
@@ -21,13 +21,13 @@ namespace HotelPrenotazioni.Controllers
             _context = context;
         }
 
-        // GET: Clienti 
+        // GET: Clienti
         public async Task<IActionResult> Index()
         {
             return View(await _context.Clienti.ToListAsync());
         }
 
-        // GET: Clienti/Details/5 
+        // GET: Clienti/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -42,17 +42,15 @@ namespace HotelPrenotazioni.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Create 
-        [Authorize(Roles = "Admin")]
+        // GET: Clienti/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Clienti/Create 
+        // POST: Clienti/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Create([Bind("ClienteId,Nome,Cognome,Email,Telefono")] Cliente cliente)
         {
             if (ModelState.IsValid)
@@ -64,8 +62,7 @@ namespace HotelPrenotazioni.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Edit/5 
-        [Authorize(Roles = "Admin")]
+        // GET: Clienti/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -78,10 +75,9 @@ namespace HotelPrenotazioni.Controllers
             return View(cliente);
         }
 
-        // POST: Clienti/Edit/5 
+        // POST: Clienti/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Edit(int id, [Bind("ClienteId,Nome,Cognome,Email,Telefono")] Cliente cliente)
         {
             if (id != cliente.ClienteId)
@@ -106,8 +102,7 @@ namespace HotelPrenotazioni.Controllers
             return View(cliente);
         }
 
-        // GET: Clienti/Delete/5 
-        [Authorize(Roles = "Admin")]
+        // GET: Clienti/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -125,7 +120,6 @@ namespace HotelPrenotazioni.Controllers
         // POST: Clienti/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var cliente = await _context.Clienti.FindAsync(id);

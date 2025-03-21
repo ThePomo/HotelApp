@@ -1,13 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using HotelPrenotazioni.Data;
+﻿using HotelPrenotazioni.Data;
 using HotelPrenotazioni.Models;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace HotelPrenotazioni.Controllers
 {
@@ -22,6 +18,7 @@ namespace HotelPrenotazioni.Controllers
         }
 
         // GET: Prenotazioni
+        [Authorize(Roles = "Admin, Manager, Operatore")]
         public async Task<IActionResult> Index()
         {
             var prenotazioni = _context.Prenotazioni.Include(p => p.Camera).Include(p => p.Cliente);
@@ -29,6 +26,7 @@ namespace HotelPrenotazioni.Controllers
         }
 
         // GET: Prenotazioni/Details/5
+        [Authorize(Roles = "Admin, Manager, Operatore")]
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null) return NotFound();
@@ -44,7 +42,7 @@ namespace HotelPrenotazioni.Controllers
         }
 
         // GET: Prenotazioni/Create
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager,Operatore")]
         public IActionResult Create()
         {
             ViewData["CameraId"] = new SelectList(_context.Camere, "CameraId", "Numero");
@@ -55,7 +53,7 @@ namespace HotelPrenotazioni.Controllers
         // POST: Prenotazioni/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager,Operatore")]
         public async Task<IActionResult> Create([Bind("PrenotazioneId,ClienteId,CameraId,DataInizio,DataFine,Stato")] Prenotazione prenotazione)
         {
             if (ModelState.IsValid)
@@ -70,8 +68,8 @@ namespace HotelPrenotazioni.Controllers
             return View(prenotazione);
         }
 
-        // GET: Prenotazioni/Edit/5
-        [Authorize(Roles = "Admin")]
+        // GET: Prenotazioni/Edit/5 
+        [Authorize(Roles = "Admin, Manager,Operatore")]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null) return NotFound();
@@ -87,7 +85,7 @@ namespace HotelPrenotazioni.Controllers
         // POST: Prenotazioni/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin, Manager,Operatore")]
         public async Task<IActionResult> Edit(int id, [Bind("PrenotazioneId,ClienteId,CameraId,DataInizio,DataFine,Stato")] Prenotazione prenotazione)
         {
             if (id != prenotazione.PrenotazioneId) return NotFound();
@@ -114,8 +112,8 @@ namespace HotelPrenotazioni.Controllers
             return View(prenotazione);
         }
 
-        // GET: Prenotazioni/Delete/5
-        [Authorize(Roles = "Admin")]
+        // GET: Prenotazioni/Delete/5 
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null) return NotFound();
@@ -130,10 +128,10 @@ namespace HotelPrenotazioni.Controllers
             return View(prenotazione);
         }
 
-        // POST: Prenotazioni/Delete/5
+        // POST: Prenotazioni/Delete/5 
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Manager")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             var prenotazione = await _context.Prenotazioni.FindAsync(id);

@@ -4,43 +4,47 @@
     ViewData["Title"] = "Index";
 }
 
-
 <p>
-    <a asp-action="Create">Crea nuova camera</a>
+    <a class="create-client-link" asp-action="Create">Crea nuova camera</a>
 </p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Numero)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Tipo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Prezzo)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Numero)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tipo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Prezzo)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.CameraId">Modifica</a> |
-                <a asp-action="Details" asp-route-id="@item.CameraId">Dettagli</a> |
-                <a asp-action="Delete" asp-route-id="@item.CameraId">Cancella</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+
+<div class="table-container">
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Numero)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Tipo)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Prezzo)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Numero)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Tipo)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Prezzo)
+                    </td>
+                    <td>
+                        <a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@item.CameraId">Modifica</a> |
+                        <a class="btn btn-info btn-sm" asp-action="Details" asp-route-id="@item.CameraId">Dettagli</a> |
+                        <a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@item.CameraId">Cancella</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

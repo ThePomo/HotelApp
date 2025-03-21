@@ -4,32 +4,38 @@
     ViewData["Title"] = "Details";
 }
 
-
-<div>
+<div class="details-container">
     <h4>Dettagli Camera</h4>
     <hr />
     <dl class="row">
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Numero)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Numero)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Tipo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Tipo)
         </dd>
-        <dt class = "col-sm-2">
+        <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Prezzo)
         </dt>
-        <dd class = "col-sm-10">
+        <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Prezzo)
         </dd>
     </dl>
+
+    <div class="btn-group" role="group">
+        <a class="btn btn-secondary" asp-action="Edit" asp-route-id="@Model?.CameraId">Modifica</a>
+        <a class="btn btn-primary" asp-action="Index">Torna alla lista</a>
+    </div>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.CameraId">Modifica</a> |
-    <a asp-action="Index">Torna alla lista</a>
-</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
