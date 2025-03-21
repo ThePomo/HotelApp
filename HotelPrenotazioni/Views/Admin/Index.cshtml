@@ -1,0 +1,27 @@
+﻿@model IEnumerable<HotelPrenotazioni.Models.UserWithRoles>
+
+
+<h2>Gestione Dipendenti</h2>
+
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <th>Ruoli</th>
+        <th>Azioni</th>
+    </tr>
+    @foreach (var userWithRoles in Model)
+    {
+        <tr>
+            <td>@userWithRoles.User.Email</td>
+            <td>@string.Join(", ", userWithRoles.Roles)</td>
+            <td>
+                <form asp-action="Delete" asp-route-id="@userWithRoles.User.Id" method="post">
+                    <button type="submit" class="btn btn-danger">Elimina</button>
+                </form>
+            </td>
+        </tr>
+    }
+
+</table>
+
+<a class="btn btn-primary" asp-action="Create">Aggiungi Dipendente</a>
